@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KING PHONE — Premium Smartphone Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8CC7A;
+    --gold-pale: #F5E6B8;
+    --navy: #0A0F1E;
+    --navy-mid: #111827;
+    --navy-glass: rgba(10, 15, 30, 0.75);
+    --white: #FFFFFF;
+    --white-dim: rgba(255,255,255,0.08);
+    --white-soft: rgba(255,255,255,0.65);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── BACKGROUND ── */
+  .bg-wrap {
+    position: fixed; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, #0D1F4A 0%, #0A0F1E 60%);
+    overflow: hidden;
+  }
+  .bg-wrap::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle 600px at 15% 40%, rgba(201,168,76,0.07) 0%, transparent 70%),
+      radial-gradient(circle 500px at 85% 60%, rgba(30,60,120,0.18) 0%, transparent 70%);
+  }
+  .grid-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 0%, transparent 80%);
+  }
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); pointer-events: none;
+    animation: float 12s ease-in-out infinite alternate;
+  }
+  .orb-1 { width: 400px; height: 400px; background: rgba(201,168,76,0.06); top: -100px; left: -100px; }
+  .orb-2 { width: 300px; height: 300px; background: rgba(20,50,120,0.15); bottom: 10%; right: -80px; animation-delay: -4s; }
+  .orb-3 { width: 250px; height: 250px; background: rgba(201,168,76,0.05); bottom: 30%; left: 20%; animation-delay: -8s; }
+  @keyframes float {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(30px, -40px) scale(1.08); }
+  }
+
+  /* ── LAYOUT ── */
+  .page { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 48px 24px 60px; }
+
+  /* ── HEADER ── */
+  header { width: 100%; max-width: 480px; text-align: center; margin-bottom: 40px; animation: fadeDown 0.9s ease both; }
+
+  .crown-icon {
+    display: inline-block; margin-bottom: 12px;
+    animation: shimmer 4s ease-in-out infinite;
+  }
+  .crown-icon svg { width: 52px; height: 52px; }
+
+  @keyframes shimmer {
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(201,168,76,0.4)); }
+    50%       { filter: drop-shadow(0 0 18px rgba(201,168,76,0.8)); }
+  }
+
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 9vw, 4.2rem);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--gold-pale) 0%, var(--gold) 45%, var(--gold-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+  }
+
+  .logo-sub {
+    font-size: 0.72rem;
+    letter-spacing: 0.35em;
+    color: rgba(201,168,76,0.65);
+    text-transform: uppercase;
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  .divider {
+    display: flex; align-items: center; gap: 14px;
+    margin: 20px auto; max-width: 260px;
+  }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .divider-gem { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
+
+  .tagline {
+    font-size: 0.85rem;
+    color: var(--white-soft);
+    letter-spacing: 0.08em;
+    font-weight: 300;
+    margin-top: -4px;
+  }
+
+  /* ── SOCIAL BUTTONS ── */
+  .social-section {
+    width: 100%; max-width: 420px;
+    display: flex; flex-direction: column; gap: 16px;
+    margin-bottom: 44px;
+    animation: fadeUp 0.9s 0.25s ease both;
+  }
+
+  .social-btn {
+    display: flex; align-items: center; gap: 18px;
+    padding: 18px 28px;
+    border-radius: 16px;
+    text-decoration: none;
+    border: 1px solid;
+    position: relative; overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+  .social-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
+  }
+  .social-btn:hover { transform: translateY(-3px); }
+  .social-btn:hover::before { opacity: 1; }
+  .social-btn:active { transform: translateY(0px) scale(0.98); }
+
+  /* Facebook */
+  .btn-facebook {
+    background: rgba(24, 44, 97, 0.55);
+    border-color: rgba(66, 103, 178, 0.45);
+    box-shadow: 0 4px 24px rgba(66, 103, 178, 0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .btn-facebook::before {
+    background: linear-gradient(135deg, rgba(66,103,178,0.2), rgba(24,44,97,0.3));
+  }
+  .btn-facebook:hover {
+    box-shadow: 0 8px 40px rgba(66, 103, 178, 0.30), inset 0 1px 0 rgba(255,255,255,0.1);
+    border-color: rgba(66, 103, 178, 0.7);
+  }
+
+  /* Instagram */
+  .btn-instagram {
+    background: rgba(60, 20, 55, 0.45);
+    border-color: rgba(201,168,76,0.3);
+    box-shadow: 0 4px 24px rgba(131,58,180,0.12), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .btn-instagram::before {
+    background: linear-gradient(135deg, rgba(131,58,180,0.15), rgba(253,29,29,0.08), rgba(252,176,69,0.08));
+  }
+  .btn-instagram:hover {
+    box-shadow: 0 8px 40px rgba(201,168,76,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+    border-color: rgba(201,168,76,0.6);
+  }
+
+  .btn-icon { width: 46px; height: 46px; flex-shrink: 0; position: relative; z-index: 1; }
+  .btn-icon svg { width: 100%; height: 100%; }
+
+  .btn-text { position: relative; z-index: 1; }
+  .btn-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    display: block;
+  }
+  .btn-handle {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.05em;
+    margin-top: 3px;
+    display: block;
+  }
+  .btn-arrow {
+    margin-left: auto; position: relative; z-index: 1;
+    color: var(--gold);
+    font-size: 1.2rem;
+    opacity: 0.6;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .social-btn:hover .btn-arrow { opacity: 1; transform: translateX(4px); }
+
+  /* ── ADDRESS CARD ── */
+  .address-card {
+    width: 100%; max-width: 420px;
+    background: var(--white-dim);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 16px;
+    padding: 22px 28px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex; align-items: flex-start; gap: 16px;
+    margin-bottom: 44px;
+    animation: fadeUp 0.9s 0.4s ease both;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .addr-icon { flex-shrink: 0; margin-top: 2px; }
+  .addr-icon svg { width: 22px; height: 22px; }
+  .addr-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .addr-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--white-soft);
+    line-height: 1.55;
+    font-weight: 400;
+  }
+
+  /* ── SERVICES ── */
+  .services {
+    width: 100%; max-width: 420px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.9s 0.5s ease both;
+  }
+  .service-pill {
+    background: var(--white-dim);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 12px;
+    padding: 16px 10px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color 0.25s, background 0.25s;
+  }
+  .service-pill:hover {
+    border-color: rgba(201,168,76,0.4);
+    background: rgba(201,168,76,0.06);
+  }
+  .service-icon { font-size: 1.5rem; margin-bottom: 6px; display: block; }
+  .service-name {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white-soft);
+    font-weight: 600;
+    display: block;
+  }
+
+  /* ── QR SECTION ── */
+  .qr-section {
+    width: 100%; max-width: 420px;
+    text-align: center;
+    animation: fadeUp 0.9s 0.6s ease both;
+  }
+  .qr-heading {
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    color: rgba(201,168,76,0.6);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  .qr-frame {
+    display: inline-block;
+    background: #fff;
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 0 0 1px rgba(201,168,76,0.35), 0 8px 40px rgba(201,168,76,0.12);
+    position: relative;
+  }
+  .qr-frame::before {
+    content: '';
+    position: absolute;
+    inset: -1px; border-radius: 21px;
+    background: linear-gradient(135deg, var(--gold), transparent 50%, var(--gold));
+    z-index: -1; opacity: 0.5;
+  }
+  .qr-frame img { display: block; width: 180px; height: 180px; image-rendering: pixelated; }
+  .qr-caption {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.08em;
+    margin-top: 14px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 52px;
+    text-align: center;
+    animation: fadeUp 0.9s 0.7s ease both;
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    color: rgba(201,168,76,0.35);
+    text-transform: uppercase;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 380px) {
+    .page { padding: 36px 16px 48px; }
+    .social-btn { padding: 15px 20px; gap: 14px; }
+    .btn-label { font-size: 1.15rem; }
+    .services { grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .service-pill { padding: 12px 6px; }
+  }
+
+  @media (min-width: 600px) {
+    .page { justify-content: center; min-height: 100vh; }
+    .qr-frame img { width: 200px; height: 200px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orb, .crown-icon, .social-btn { animation: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-wrap" aria-hidden="true">
+  <div class="grid-lines"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="crown-icon">
+      <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="crownGrad" x1="0" y1="0" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#F5E6B8"/>
+            <stop offset="50%" stop-color="#C9A84C"/>
+            <stop offset="100%" stop-color="#E8CC7A"/>
+          </linearGradient>
+        </defs>
+        <path d="M6 38 L10 20 L19 30 L26 10 L33 30 L42 20 L46 38 Z" fill="url(#crownGrad)" stroke="none"/>
+        <rect x="6" y="38" width="40" height="5" rx="2.5" fill="url(#crownGrad)"/>
+        <circle cx="10" cy="19" r="3" fill="#E8CC7A"/>
+        <circle cx="26" cy="9" r="3.5" fill="#F5E6B8"/>
+        <circle cx="42" cy="19" r="3" fill="#E8CC7A"/>
+      </svg>
+    </div>
+    <div class="logo-text">King Phone</div>
+    <div class="logo-sub">Premium • Repair • Accessories</div>
+    <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-line"></div></div>
+    <p class="tagline">Your Trusted Smartphone Destination — Bejaia, Algeria</p>
+  </header>
+
+  <!-- ── SOCIAL BUTTONS ── -->
+  <div class="social-section" role="navigation" aria-label="Social media links">
+
+    <a href="https://www.facebook.com/share/18pSWbjYJ5/" class="social-btn btn-facebook" target="_blank" rel="noopener noreferrer" aria-label="Visit KING PHONE on Facebook">
+      <span class="btn-icon">
+        <svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="23" cy="23" r="23" fill="#1877F2"/>
+          <path d="M30 15h-4a2 2 0 0 0-2 2v3h-3v4h3v9h4v-9h3l1-4h-4v-2a1 1 0 0 1 1-1h3z" fill="white"/>
+        </svg>
+      </span>
+      <span class="btn-text">
+        <span class="btn-label">Facebook</span>
+        <span class="btn-handle">King Phone — Suivez-nous</span>
+      </span>
+      <span class="btn-arrow" aria-hidden="true">→</span>
+    </a>
+
+    <a href="https://www.instagram.com/king_phone06?igsh=MWJjdnM2NG42M3VpMA==" class="social-btn btn-instagram" target="_blank" rel="noopener noreferrer" aria-label="Visit KING PHONE on Instagram">
+      <span class="btn-icon">
+        <svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="igGrad" cx="30%" cy="107%" r="130%" fx="30%" fy="107%">
+              <stop offset="0%" stop-color="#fdf497"/>
+              <stop offset="5%" stop-color="#fdf497"/>
+              <stop offset="45%" stop-color="#fd5949"/>
+              <stop offset="60%" stop-color="#d6249f"/>
+              <stop offset="90%" stop-color="#285AEB"/>
+            </radialGradient>
+          </defs>
+          <rect width="46" height="46" rx="12" fill="url(#igGrad)"/>
+          <rect x="13" y="13" width="20" height="20" rx="6" stroke="white" stroke-width="2.2" fill="none"/>
+          <circle cx="23" cy="23" r="5" stroke="white" stroke-width="2.2" fill="none"/>
+          <circle cx="30.5" cy="15.5" r="1.4" fill="white"/>
+        </svg>
+      </span>
+      <span class="btn-text">
+        <span class="btn-label">Instagram</span>
+        <span class="btn-handle">@king_phone06</span>
+      </span>
+      <span class="btn-arrow" aria-hidden="true">→</span>
+    </a>
+
+  </div>
+
+  <!-- ── ADDRESS ── -->
+  <div class="address-card" itemscope itemtype="https://schema.org/LocalBusiness">
+    <span class="addr-icon" aria-hidden="true">
+      <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 2C7.69 2 5 4.69 5 8c0 4.5 6 12 6 12s6-7.5 6-12c0-3.31-2.69-6-6-6z" fill="#C9A84C" opacity="0.9"/>
+        <circle cx="11" cy="8" r="2.3" fill="#0A0F1E"/>
+      </svg>
+    </span>
+    <div>
+      <span class="addr-label">Notre Adresse</span>
+      <span class="addr-text" itemprop="address">Terminus Ighil Ouazoug<br>Bejaia, Algérie</span>
+    </div>
+  </div>
+
+  <!-- ── SERVICES ── -->
+  <div class="services" role="list">
+    <div class="service-pill" role="listitem">
+      <span class="service-icon">📱</span>
+      <span class="service-name">Vente</span>
+    </div>
+    <div class="service-pill" role="listitem">
+      <span class="service-icon">🔧</span>
+      <span class="service-name">Réparation</span>
+    </div>
+    <div class="service-pill" role="listitem">
+      <span class="service-icon">🎧</span>
+      <span class="service-name">Accessoires</span>
+    </div>
+  </div>
+
+  <!-- ── QR CODE ── -->
+  <div class="qr-section">
+    <p class="qr-heading">Scannez pour nous retrouver</p>
+    <div class="qr-frame">
+      <img src="data:image/png;base64,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" alt="QR Code King Phone — Terminus Ighil Ouazoug, Bejaia" width="180" height="180">
+    </div>
+    <p class="qr-caption">Scannez avec votre appareil photo</p>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p class="footer-brand">© 2025 King Phone · Bejaia · Algeria</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
